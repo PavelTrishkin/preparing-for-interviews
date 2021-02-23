@@ -46,6 +46,7 @@ public class TestRestHttp {
                         System.out.println(line);
                     }
                 }while (line != null);
+
             }
         }
 
@@ -61,17 +62,16 @@ public class TestRestHttp {
             statusCode = Integer.parseInt(token[1]);
         }
 
-        private static void sendRequest(String host, int port, String method) throws IOException {
+        private static void sendRequest(String host, String url, int port, String method) throws IOException {
             try (Socket socket = new Socket(host, port)) {
                 StringBuilder request = new StringBuilder();
-                request.append(method + " /hello HTTP/1.1").append("\r\n");
+                request.append(method + " " + url + " HTTP/1.1").append("\r\n");
                 request.append("Host: ").append(host + ":" + port).append("\r\n");
-                request.append("Accept: ").append("text/html;charset=UTF-8").append("\r\n");
+                request.append("Accept: ").append("text/html,application/json;charset=UTF-8").append("\r\n");
                 request.append("Connection: ").append("close").append("\r\n");
-                request.append("Content-Type: ").append("text/html;charset=UTF-8").append("\r\n");
+                request.append("Content-Type: ").append("text/html,application/json;charset=UTF-8").append("\r\n");
                 request.append("\r\n");
 
-                System.out.println(request.toString());
                 socket.getOutputStream().write(request.toString().getBytes(StandardCharsets.UTF_8));
                 socket.getOutputStream().flush();
 
@@ -80,7 +80,9 @@ public class TestRestHttp {
         }
 
         public static void main(String[] args) throws IOException {
-            sendRequest("localhost", 8080, "GET");
+            sendRequest("localhost","/hello", 8080, "GET");
+
+            sendRequest("localhost","/person", 8080, "GET");
         }
     }
 }
