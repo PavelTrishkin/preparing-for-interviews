@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>All Students</title>
+</head>
+<body>
+<div align="center">
+    <h1>All students</h1>
+    <p>On this page you can view all active students</p>
+    <table border="1" id="studenttable">
+        <tr>
+            <td>Name</td>
+            <td>Age</td>
+        </tr>
+        <tr th:each="student : ${students}">
+            <td th:text="${student.name}">Name</td>
+            <td th:text="${student.age}">Age</td>
+            <td><a th:href="@{/students/{id}(id=${student.id})}">Edit</a></td>
+            <td><a th:href="@{/students/{id}/delete(id=${student.id})}">Delete</a></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
